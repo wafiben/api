@@ -1,25 +1,14 @@
-"""
-URL configuration for api project.
-
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/4.2/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-from django.contrib import admin
 from django.urls import path,include
+from api.modules.user.commands.delete_user.delete_user_controller import DeleteUserController
+from api.modules.user.commands.modify_user.modify_user_controller import ModifyUserController
 from api.modules.user.queries.get_all_users.get_all_users_controller import GetUsersController
-
-
+from api.modules.user.commands.create_user.create_user_controller import CreateUserController
+from api.modules.user.queries.get_single_user.get_single_user_controller import GetSingleUserController
 
 urlpatterns = [
-    path('users/', include('api.modules.user.urls'))
+     path('users',GetUsersController.get_users, name='get_all_users'),
+     path('create_user',CreateUserController.create_user, name='create_user'),
+     path('users/<int:user_id>', GetSingleUserController.get_single_user, name='get_single_user'),
+     path('delete_user/<int:user_id>', DeleteUserController.delete_user, name='delete_user_by_id'),
+     path('modify_user/<int:user_id>', ModifyUserController.modify_user, name='modify_user'),
 ]
